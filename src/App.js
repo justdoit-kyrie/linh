@@ -1,41 +1,44 @@
-import React from 'react';
 import {
-  ChakraProvider,
   Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
+  ChakraProvider, useColorMode
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import Banner1 from 'assets/img/banner-1.jpg';
+import Banner2 from 'assets/img/banner-2.jpg';
+import Portfolio1 from 'assets/img/portfolio-1.jpg';
+import Portfolio2 from 'assets/img/portfolio-2.jpg';
+import Portfolio3 from 'assets/img/portfolio-3.jpg';
+import theme from 'assets/theme';
+import { Banner, Header, Info, Content, Footer, ColorModeSwitcher } from 'components';
+import React from 'react';
+
+const MOCK_DATA = {
+  banner: [Banner1, Banner2],
+  portfolio: [Portfolio1, Portfolio2, Portfolio3]
+}
 
 function App() {
+  const { banner, portfolio } = MOCK_DATA
+  const { toggleColorMode } = useColorMode();
+
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
+    <Box className="wrapper">
+      <Box position="fixed" right="2rem" top="2rem">
+        <ColorModeSwitcher handlecolormode={toggleColorMode} />
       </Box>
-    </ChakraProvider>
+      <div className="container">
+        <Header />
+
+        {banner && banner.length > 0 && (<Banner image={banner} isPadding="true" />)}
+
+        <Info />
+
+        {portfolio && portfolio.length > 0 && (<Banner image={portfolio} isPadding="true" />)}
+
+        <Content />
+
+        <Footer />
+      </div>
+    </Box>
   );
 }
 
